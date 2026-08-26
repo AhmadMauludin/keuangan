@@ -5,5 +5,5 @@ if (!$koneksi) {
     die("Koneksi database gagal");
 }
 
-define('BASE_PATH', __DIR__);
-define('BASE_URL', '/praktikum11');
+if (!defined('BASE_PATH')) define('BASE_PATH', __DIR__);
+if (!defined('BASE_URL')) define('BASE_URL', '/praktikum11');

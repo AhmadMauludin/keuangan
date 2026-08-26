@@ -1,11 +1,20 @@
 <?php
 include dirname(__DIR__) . '/koneksi.php';
+include dirname(__DIR__) . '/auth.php';
+requireRole('admin');
 
 $judul = 'Edit Data Siswa';
 
-$id = $_GET['id'];
-$data = mysqli_query($koneksi, "SELECT * FROM datasiswa WHERE id='$id'");
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$data = mysqli_query($koneksi, "SELECT * FROM datasiswa WHERE id=$id");
 $siswa = mysqli_fetch_assoc($data);
+
+if (!$siswa) {
+    header("location:tampil.php");
+    exit;
+}
+
+$kelas = mysqli_query($koneksi, "SELECT id_kelas, namakelas FROM datakelas ORDER BY namakelas");
 
 include dirname(__DIR__) . '/layout/header.php';
 ?>
@@ -20,10 +29,13 @@ include dirname(__DIR__) . '/layout/header.php';
     <input type="text" name="nama" value="<?= htmlspecialchars($siswa['nama']); ?>" required><br>
 
     <label>Kelas:</label><br>
-    <select name="kelas" required>
-        <option value="X" <?= $siswa['kelas'] == 'X' ? 'selected' : ''; ?>>X</option>
-        <option value="XI" <?= $siswa['kelas'] == 'XI' ? 'selected' : ''; ?>>XI</option>
-        <option value="XII" <?= $siswa['kelas'] == 'XII' ? 'selected' : ''; ?>>XII</option>
+    <select name="id_kelas">
+        <option value="">-- Pilih Kelas (opsional) --</option>
+        <?php while ($k = mysqli_fetch_assoc($kelas)) : ?>
+            <option value="<?= $k['id_kelas']; ?>" <?= $siswa['id_kelas'] == $k['id_kelas'] ? 'selected' : ''; ?>>
+                <?= htmlspecialchars($k['namakelas']); ?>
+            </option>
+        <?php endwhile; ?>
     </select><br>
 
     <label>Tanggal Lahir:</label><br>
@@ -31,6 +43,12 @@ include dirname(__DIR__) . '/layout/header.php';
 
     <label>Alamat:</label><br>
     <input type="text" name="alamat" value="<?= htmlspecialchars($siswa['alamat']); ?>" required><br>
+
+    <label>Status:</label><br>
+    <select name="status" required>
+        <option value="aktif" <?= $siswa['status'] === 'aktif' ? 'selected' : ''; ?>>Aktif</option>
+        <option value="tidak aktif" <?= $siswa['status'] === 'tidak aktif' ? 'selected' : ''; ?>>Tidak Aktif</option>
+    </select><br>
 
     <label>Foto Lama:</label><br>
     <img src="<?= BASE_URL; ?>/uploads/foto_siswa/<?= $siswa['foto']; ?>" width="100"><br><br>

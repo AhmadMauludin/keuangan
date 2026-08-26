@@ -1,7 +1,11 @@
 <?php
 include dirname(__DIR__) . '/koneksi.php';
+include dirname(__DIR__) . '/auth.php';
+requireRole('admin');
 
 $judul = 'Tambah Data Siswa';
+$kelas = mysqli_query($koneksi, "SELECT id_kelas, namakelas FROM datakelas ORDER BY namakelas");
+
 include dirname(__DIR__) . '/layout/header.php';
 ?>
 
@@ -12,11 +16,11 @@ include dirname(__DIR__) . '/layout/header.php';
     <input type="text" name="nama" required><br>
 
     <label>Kelas:</label><br>
-    <select name="kelas" required>
-        <option value="">-- Pilih Kelas --</option>
-        <option value="X">X</option>
-        <option value="XI">XI</option>
-        <option value="XII">XII</option>
+    <select name="id_kelas">
+        <option value="">-- Pilih Kelas (opsional) --</option>
+        <?php while ($k = mysqli_fetch_assoc($kelas)) : ?>
+            <option value="<?= $k['id_kelas']; ?>"><?= htmlspecialchars($k['namakelas']); ?></option>
+        <?php endwhile; ?>
     </select><br>
 
     <label>Tanggal Lahir:</label><br>
@@ -24,6 +28,12 @@ include dirname(__DIR__) . '/layout/header.php';
 
     <label>Alamat:</label><br>
     <input type="text" name="alamat" required><br>
+
+    <label>Status:</label><br>
+    <select name="status" required>
+        <option value="aktif">Aktif</option>
+        <option value="tidak aktif">Tidak Aktif</option>
+    </select><br>
 
     <label>Foto:</label><br>
     <input type="file" name="foto" required><br>
