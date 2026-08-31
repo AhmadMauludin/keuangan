@@ -115,7 +115,12 @@ if (!function_exists('getUserAccessiblePages')) {
             'user/index' => ['admin'],
             'user/detail' => ['admin'],
             'user/edit' => ['admin'],
-            'profile' => ['admin', 'kepala', 'user']
+            'profile' => ['admin', 'kepala', 'user'],
+            'pembayaran/bayar' => ['user'],
+            'pembayaran/riwayat' => ['admin', 'kepala', 'user'],
+            'pembayaran/konfirmasi' => ['admin', 'kepala'],
+            'pembayaran/aturan/tampil' => ['admin'],
+            'pembayaran/aturan/index' => ['admin']
         ];
 
         $accessible = [];
@@ -169,12 +174,22 @@ if (!function_exists('getSidebarMenu')) {
                 $menu[] = ['url' => BASE_URL . '/ruang/index.php', 'icon' => '➕', 'label' => 'Tambah Data Ruangan', 'roles' => ['admin'], 'sub' => true];
             }
 
+            $menu[] = ['url' => BASE_URL . '/pembayaran/konfirmasi.php', 'icon' => '💰', 'label' => 'Pembayaran', 'roles' => ['admin', 'kepala'], 'has_sub' => true];
+            $menu[] = ['url' => BASE_URL . '/pembayaran/konfirmasi.php', 'icon' => '✅', 'label' => 'Konfirmasi Bayar', 'roles' => ['admin', 'kepala'], 'sub' => true];
+            $menu[] = ['url' => BASE_URL . '/pembayaran/bayar_langsung.php', 'icon' => '💵', 'label' => 'Bayar Langsung', 'roles' => ['admin'], 'sub' => true];
+            $menu[] = ['url' => BASE_URL . '/pembayaran/riwayat.php', 'icon' => '📜', 'label' => 'Riwayat Bayar', 'roles' => ['admin', 'kepala'], 'sub' => true];
+            if ($role === 'admin') {
+                $menu[] = ['url' => BASE_URL . '/pembayaran/aturan/tampil.php', 'icon' => '⚙️', 'label' => 'Aturan Bayar', 'roles' => ['admin'], 'sub' => true];
+            }
+
             if ($role === 'admin') {
                 $menu[] = ['url' => BASE_URL . '/user/tampil.php', 'icon' => '👥', 'label' => 'Kelola User', 'roles' => ['admin'], 'has_sub' => true];
                 $menu[] = ['url' => BASE_URL . '/user/tampil.php', 'icon' => '📋', 'label' => 'Lihat User', 'roles' => ['admin'], 'sub' => true];
                 $menu[] = ['url' => BASE_URL . '/user/index.php', 'icon' => '➕', 'label' => 'Tambah User', 'roles' => ['admin'], 'sub' => true];
             }
         } else {
+            $menu[] = ['url' => BASE_URL . '/pembayaran/bayar.php', 'icon' => '💰', 'label' => 'Pembayaran', 'roles' => ['user'], 'has_sub' => true];
+            $menu[] = ['url' => BASE_URL . '/pembayaran/bayar.php', 'icon' => '📋', 'label' => 'Tagihan & Pembayaran', 'roles' => ['user'], 'sub' => true];
             $menu[] = ['url' => BASE_URL . '/profile.php', 'icon' => '👤', 'label' => 'Profil Saya', 'roles' => ['user']];
         }
 

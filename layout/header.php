@@ -450,7 +450,7 @@ $sidebarMenu = getSidebarMenu();
 <body>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="sidebar-version"> AS V.1.7</span>
+            <span class="sidebar-version"> AS V.2.0</span>
             <button class="sidebar-toggle" id="sidebarToggle" title="Tutup/Buka Menu">☰</button>
         </div>
         <ul>
@@ -474,7 +474,9 @@ $sidebarMenu = getSidebarMenu();
                         ($currentDir === 'siswa' && strpos($item['url'], 'siswa') !== false) ||
                         ($currentDir === 'guru' && strpos($item['url'], 'guru') !== false) ||
                         ($currentDir === 'kelas' && strpos($item['url'], 'kelas') !== false) ||
-                        ($currentDir === 'ruang' && strpos($item['url'], 'ruang') !== false)
+                        ($currentDir === 'ruang' && strpos($item['url'], 'ruang') !== false) ||
+                        ($currentDir === 'pembayaran' && strpos($item['url'], 'pembayaran') !== false) ||
+                        ($currentDir === 'aturan' && strpos($item['url'], 'aturan') !== false)
                     ) {
                         $active = ' active';
                     }
