@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2026 at 07:52 AM
+-- Generation Time: Sep 02, 2026 at 06:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,8 +18,32 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `praktikum11`
+-- Database: `keuangan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aturan_pembayaran`
+--
+
+CREATE TABLE `aturan_pembayaran` (
+  `id` int(11) NOT NULL,
+  `nama_biaya` varchar(100) NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `target` enum('semua','kelas','tingkat','siswa') NOT NULL DEFAULT 'semua',
+  `target_id` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `aturan_pembayaran`
+--
+
+INSERT INTO `aturan_pembayaran` (`id`, `nama_biaya`, `nominal`, `keterangan`, `target`, `target_id`, `created_at`) VALUES
+(9, 'PPDB', 50000, '', 'siswa', '1', '2026-08-31 06:42:37'),
+(10, 'SPP Bulan Juli', 100000, '', 'semua', NULL, '2026-08-31 06:43:50');
 
 -- --------------------------------------------------------
 
@@ -213,6 +237,111 @@ INSERT INTO `datasiswa` (`id`, `nama`, `status`, `tanggal_lahir`, `alamat`, `fot
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pembayaran`
+--
+
+CREATE TABLE `pembayaran` (
+  `id` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `id_aturan` int(11) NOT NULL,
+  `nominal_bayar` int(11) NOT NULL,
+  `metode_bayar` enum('cash','transfer','ewallet') NOT NULL,
+  `bukti_bayar` varchar(255) DEFAULT NULL,
+  `status` enum('belum','pending','dikonfirmasi','ditolak') NOT NULL DEFAULT 'belum',
+  `keterangan` text DEFAULT NULL,
+  `catatan_admin` text DEFAULT NULL,
+  `tanggal_bayar` date NOT NULL,
+  `tanggal_konfirmasi` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id`, `id_siswa`, `id_aturan`, `nominal_bayar`, `metode_bayar`, `bukti_bayar`, `status`, `keterangan`, `catatan_admin`, `tanggal_bayar`, `tanggal_konfirmasi`, `created_at`) VALUES
+(3, 1, 9, 50000, 'cash', 'bukti_1_1788158585.jpg', 'dikonfirmasi', '', NULL, '2026-08-31', '2026-08-31 08:43:17', '2026-08-31 06:42:37'),
+(4, 1, 10, 100000, 'transfer', 'bukti_1_1788159308.jpg', 'dikonfirmasi', '', NULL, '2026-08-31', '2026-08-31 08:55:27', '2026-08-31 06:43:50'),
+(5, 2, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(6, 3, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(7, 4, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(8, 5, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(9, 6, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(10, 7, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(11, 8, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(12, 9, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(13, 10, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(14, 11, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(15, 12, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(16, 13, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(17, 14, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(18, 15, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(19, 16, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(20, 17, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(21, 18, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(22, 19, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(23, 20, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(24, 21, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(25, 22, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(26, 23, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(27, 24, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(28, 25, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(29, 26, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(30, 27, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(31, 28, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(32, 29, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(33, 30, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(34, 31, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(35, 32, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(36, 33, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(37, 34, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(38, 35, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(39, 36, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(40, 37, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(41, 38, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(42, 39, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(43, 40, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(44, 41, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(45, 42, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(46, 43, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(47, 44, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(48, 45, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(49, 46, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(50, 47, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(51, 48, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(52, 49, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(53, 50, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(54, 51, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(55, 52, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(56, 53, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(57, 54, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(58, 55, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(59, 56, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(60, 57, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(61, 58, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(62, 59, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(63, 60, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(64, 61, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(65, 62, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(66, 63, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(67, 64, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(68, 65, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(69, 66, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(70, 67, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(71, 68, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(72, 69, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(73, 70, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(74, 71, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(75, 72, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(76, 73, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(77, 74, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(78, 75, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(79, 76, 10, 100000, '', NULL, 'belum', '', NULL, '2026-08-31', NULL, '2026-08-31 06:43:50'),
+(80, 2, 10, 100000, 'cash', NULL, 'dikonfirmasi', '', NULL, '2026-09-02', '2026-09-02 11:39:20', '2026-09-02 04:39:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -240,6 +369,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `role`, `id_g
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `aturan_pembayaran`
+--
+ALTER TABLE `aturan_pembayaran`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `dataguru`
@@ -270,6 +405,14 @@ ALTER TABLE `datasiswa`
   ADD KEY `id_kelas` (`id_kelas`);
 
 --
+-- Indexes for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_siswa` (`id_siswa`),
+  ADD KEY `id_aturan` (`id_aturan`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -281,6 +424,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `aturan_pembayaran`
+--
+ALTER TABLE `aturan_pembayaran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `dataguru`
@@ -307,6 +456,12 @@ ALTER TABLE `datasiswa`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
+-- AUTO_INCREMENT for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -329,6 +484,13 @@ ALTER TABLE `datakelas`
 --
 ALTER TABLE `datasiswa`
   ADD CONSTRAINT `datasiswa_ibfk_1` FOREIGN KEY (`id_kelas`) REFERENCES `datakelas` (`id_kelas`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `datasiswa` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `pembayaran_ibfk_2` FOREIGN KEY (`id_aturan`) REFERENCES `aturan_pembayaran` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`
