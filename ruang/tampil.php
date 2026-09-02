@@ -59,7 +59,6 @@ include dirname(__DIR__) . '/layout/header.php';
 <table>
     <tr>
         <th>No</th>
-        <th>Foto</th>
         <th>Nama Ruangan</th>
         <th>Kapasitas</th>
         <th>Keterangan</th>
@@ -77,9 +76,6 @@ include dirname(__DIR__) . '/layout/header.php';
         <?php while ($row = mysqli_fetch_assoc($data)) : ?>
             <tr>
                 <td><?= $no++; ?></td>
-                <td>
-                    <img src="<?= BASE_URL; ?>/uploads/foto_ruang/<?= $row['foto'] ?: 'default-ruang.jpg' ?>" width="60" style="border-radius:4px;">
-                </td>
                 <td><?= htmlspecialchars($row['nama_ruang']) ?></td>
                 <td><?= $row['kapasitas'] ?> orang</td>
                 <td><?= htmlspecialchars($row['keterangan']) ?></td>

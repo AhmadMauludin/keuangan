@@ -53,11 +53,7 @@ include dirname(__DIR__) . '/layout/header.php';
         <p style="color:#c0392b; font-weight:bold;">Akun Anda tidak terkait dengan data siswa. Silakan hubungi administrator.</p>
     </div>
 <?php else : ?>
-    <div style="background:#d5f5e3; padding:15px 20px; border-radius:6px; margin-bottom:20px; border-left:4px solid #27ae60;">
-        <p style="margin:0;"><strong>Siswa:</strong> <?= htmlspecialchars($siswa['nama']) ?></p>
-        <p style="margin:3px 0 0;"><strong>Kelas:</strong> <?= htmlspecialchars($siswa['namakelas'] ?? '-') ?> | <strong>Tingkat:</strong> <?= htmlspecialchars($siswa['tingkat'] ?? '-') ?></p>
-    </div>
-
+    
     <?php if (isset($_GET['status']) && $_GET['status'] === 'sukses') : ?>
         <div style="padding:12px 20px; background:#d5f5e3; border-radius:6px; border-left:4px solid #27ae60; margin-bottom:20px;">
             <p style="margin:0; color:#27ae60; font-weight:bold;">Pembayaran berhasil dikirim! Menunggu konfirmasi admin.</p>
