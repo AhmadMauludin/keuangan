@@ -450,7 +450,7 @@ $sidebarMenu = getSidebarMenu();
 <body>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="sidebar-version"> AS V.2.0</span>
+            <span class="sidebar-version"> AKS V.2.0</span>
             <button class="sidebar-toggle" id="sidebarToggle" title="Tutup/Buka Menu">☰</button>
         </div>
         <ul>
@@ -495,7 +495,7 @@ $sidebarMenu = getSidebarMenu();
         <?php if ($user): ?>
             <div class="top-bar">
                 <div class="top-bar-left">
-                    <h1 class="top-app-title">Aplikasi Sekolah</h1>
+                    <h1 class="top-app-title">Aplikasi Keuangan Sekolah</h1>
                 </div>
                 <div class="top-bar-right">
                     <span class="top-user-name"><?= htmlspecialchars($user['nama_lengkap']) ?></span>
